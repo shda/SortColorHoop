@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +9,7 @@ namespace SortColorHoop.Scripts
     {
         [SerializeField] private Camera mainCamera;
 
-        public Action<Stack> OnStackClick;
+        public Subject<Stack> OnStackClick { get; set; } = new();
         
         private void Update()
         { 
@@ -19,7 +20,7 @@ namespace SortColorHoop.Scripts
                 if (hitCollider)
                 {
                     var stack = hitCollider.GetComponent<Stack>();
-                    OnStackClick?.Invoke(stack);
+                    OnStackClick?.OnNext(stack);
                 }
             }
         }

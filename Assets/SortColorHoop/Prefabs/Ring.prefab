@@ -150,6 +150,8 @@ MonoBehaviour:
     back: {fileID: 21300000, guid: c23b0906bacd8c640abd6d60ed50892d, type: 3}
   - front: {fileID: 21300000, guid: 83007a61990a59d449390c88644b163c, type: 3}
     back: {fileID: 21300000, guid: c2e803ff974632447bdea235a4d2c25e, type: 3}
+  - front: {fileID: -2850776150966528647, guid: e3a43e4a82d29094ba6ce914a4805b83, type: 3}
+    back: {fileID: 2096379947058244729, guid: bcdacdd10e8b1e745842b92d37a25501, type: 3}
 --- !u!1 &5780091265891361067
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,114 +1,65 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using SortColorHoop.Scripts.Bonuses;
 using TriInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SortColorHoop.Scripts
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] private Board board;
-        [SerializeField] private Vector2Int size;
-        [SerializeField] private ClickHandler clickHandler;
-
-        private Stack _selectStack;
+        [SerializeField] private int countSticks;
         
+        [SerializeField] private LevelCountData levelCountData;
+        [SerializeField] private AnimationMovingRings animationMovingRings;
+        [SerializeField] private LevelLabel levelLabel;
+        [SerializeField] private Board board;
+        [SerializeField] private BonusHandler bonusHandler;
+        
+        private LevelStartConfigurator _levelStartConfigurator;
+        private Stack _selectStack;
+
         private void Awake()
         {
-            clickHandler.OnStackClick = OnStackClick;
+            animationMovingRings.OnCompleteMoving = OnCheckEndLevel;
         }
 
-        private void OnStackClick(Stack stack)
+        public void OnRestartLevel()
         {
-            if (!_selectStack)
-            {
-                if(stack.IsEmpty())
-                    return;
-                
-                if(stack.IsAllRingsOneColor())
-                    return;
-                
-                _selectStack = stack;
-                _selectStack.MoveRingToUp();
-            }
-            else
-            {
-                if (_selectStack == stack)
-                {
-                    _selectStack.ReturnRingsToDefaultPosition();
-                    _selectStack = null;
-                }
-                else
-                {
-                    if (IsCanMovingRingsToOtherStack(stack))
-                    {
-                        MovingRingsToOtherStack(_selectStack , stack , false).Forget();
-                    }
-                }
-            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        private bool IsCanMovingRingsToOtherStack(Stack destinationRing)
+        private void OnCheckEndLevel()
         {
-            if(destinationRing.IsFull())
-                return false;
+            var countFillStacks = board.CountFillStacks();
             
-            if(destinationRing.IsAllRingsOneColor())
-                return false;
-
-            var isCanMoving = false;
-            
-            var topDisRing = destinationRing.GetTopRing();
-            var topFromRing = _selectStack.GetTopRing();
-
-            if (!topFromRing)
+            if (_levelStartConfigurator.CountNeedFillStacksToWin == countFillStacks)
             {
-                return false;
+                levelCountData.LevelNumber.Value++;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-
-            if (!topDisRing)
-            {
-                isCanMoving = true;
-            }
-            else if(topFromRing.IndexColor == topDisRing.IndexColor)
-            {
-                isCanMoving = true;
-            }
-
-            return isCanMoving;
         }
-
-        private async UniTask MovingRingsToOtherStack(Stack from , Stack detonation , bool movingUp = false)
+        
+        private void StartLevel(int level)
         {
-            var last = from.Rings.Last();
-            if (movingUp)
-            {
-                await from.MoveRingToUp(last);
-            }
+            levelCountData.LevelNumber.Value = level;
             
-            from.Rings.Remove(last);
-            await detonation.AddAnimatedRing(last);
-
-            if (IsCanMovingRingsToOtherStack(detonation))
-            {
-                await MovingRingsToOtherStack(from , detonation , true);
-            }
-
-            _selectStack = null;
+            _levelStartConfigurator = new LevelStartConfigurator();
+            _levelStartConfigurator.CreateLevel(board, level);
+            
+            levelLabel.SetLevelNumber(level);
         }
-
+        
         private void Start()
         {
-            CreateBoard();
+            StartLevel(levelCountData.LevelNumber.Value);
+            // CreateBoard();
         }
 
         [Button]
         private void CreateBoard()
         {
-            board.CreateFullStacksAndFree(size.x , 2);
+            board.CreateFullStacksAndFree(countSticks , 2);
         }
     }
 }

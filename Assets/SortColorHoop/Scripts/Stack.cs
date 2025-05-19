@@ -101,5 +101,15 @@ namespace SortColorHoop.Scripts
             await ring.transform.DOMove(pointTarget.transform.position, durationMoving);
             Rings.Add(ring);
         }
+
+        public void RemoveAllRings(RingPool ringPool)
+        {
+            foreach (var ring in Rings)
+            {
+                ringPool.Release(ring);
+            }
+            
+            Rings.Clear();
+        }
     }
 }

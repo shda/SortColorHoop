@@ -2,35 +2,38 @@ using UnityEngine;
 
 namespace SortColorHoop.Scripts
 {
-    public class LevelStartConfigurator : MonoBehaviour
+    public class LevelStartConfigurator
     {
-        [SerializeField] private Board board;
-            
-        public void CreateLevel(int level)
+        public int CountNeedFillStacksToWin;
+        
+        public void CreateLevel(Board board , int level)
         {
             switch (level)
             {
                 case <= 10:
-                    CreateStacks(6);
+                    CreateStacks(board ,6);
                     break;
                 case <= 20:
-                    CreateStacks(7);
+                    CreateStacks(board ,7);
                     break;
                 case <= 30:
-                    CreateStacks(8);
+                    CreateStacks(board ,8);
                     break;
                 case <= 40:
-                    CreateStacks(9);
+                    CreateStacks(board ,9);
                     break;
                 default:
-                    CreateStacks(10);
+                    CreateStacks(board ,10);
                     break;
             }
         }
 
-        private void CreateStacks(int countStacks)
+        private void CreateStacks(Board board, int countAllStacks)
         {
-            board.CreateFullStacksAndFree(countStacks , 2);
+            int freeStacks = 2;
+            
+            CountNeedFillStacksToWin = countAllStacks - freeStacks;
+            board.CreateFullStacksAndFree(countAllStacks , freeStacks);
         }
     }
 }

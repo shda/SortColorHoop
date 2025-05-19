@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BlockBlast.Scripts.Common.Extensions;
 using UnityEngine;
 
@@ -75,6 +76,11 @@ namespace SortColorHoop.Scripts
             }
             
             stacks.Clear();
+        }
+
+        public int CountFillStacks()
+        {
+            return stacks.Count(stack => stack.IsAllRingsOneColor());
         }
     }
 }
