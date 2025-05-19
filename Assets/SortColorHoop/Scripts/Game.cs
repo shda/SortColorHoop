@@ -1,5 +1,4 @@
 using SortColorHoop.Scripts.Bonuses;
-using TriInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,18 +6,24 @@ namespace SortColorHoop.Scripts
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField] private int countSticks;
         [SerializeField] private AnimationMovingRings animationMovingRings;
         [SerializeField] private LevelLabel levelLabel;
         [SerializeField] private Board board;
         [SerializeField] private BonusHandler bonusHandler;
-        
+
         private LevelStartConfigurator _levelStartConfigurator;
         private Stack _selectStack;
 
         private void Awake()
         {
             animationMovingRings.OnCompleteMoving = OnCheckEndLevel;
+        }
+        
+        private void Start()
+        {
+            BonusCountData.Load();
+            LevelCountData.Load();
+            StartLevel(LevelCountData.LevelNumber.Value);
         }
 
         public void OnRestartLevel()
@@ -28,12 +33,12 @@ namespace SortColorHoop.Scripts
 
         private void OnCheckEndLevel()
         {
-            if (board.IsCompleteGame())
+            if (board.IsAllStacksOneColor())
             {
                 LevelCountData.LevelNumber.Value++;
-                
+
                 AddRandomBonusInNeed();
-                
+
                 LevelCountData.Save();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -41,9 +46,9 @@ namespace SortColorHoop.Scripts
 
         private void AddRandomBonusInNeed()
         {
-            if(LevelCountData.LevelNumber.Value % 5 != 0)
+            if (LevelCountData.LevelNumber.Value % 5 != 0)
                 return;
-            
+
             var bonusIndex = Random.Range(0, 3);
             switch (bonusIndex)
             {
@@ -59,28 +64,16 @@ namespace SortColorHoop.Scripts
                 default:
                     break;
             }
-            
+
             BonusCountData.Save();
         }
-        
+
         private void StartLevel(int level)
         {
             _levelStartConfigurator = new LevelStartConfigurator();
             _levelStartConfigurator.CreateLevel(board, level);
-            
-            levelLabel.SetLevelNumber(level);
-        }
-        
-        private void Start()
-        {
-            LevelCountData.Load();
-            StartLevel(LevelCountData.LevelNumber.Value);
-        }
 
-        [Button]
-        private void CreateBoard()
-        {
-            board.CreateFullStacksAndFree(countSticks , 2);
+            levelLabel.SetLevelNumber(level);
         }
     }
 }

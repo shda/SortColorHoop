@@ -8,7 +8,6 @@ namespace SortColorHoop.Scripts.Bonuses
 {
     public class BrushBonusAnimation : MonoBehaviour
     {
-        [SerializeField] private float durationMoving = 0.2f;
         [SerializeField] private Transform[] movingPointFirst;
         [SerializeField] private Transform[] movingPointSecond;
 

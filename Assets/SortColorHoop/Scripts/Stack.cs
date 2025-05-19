@@ -47,15 +47,15 @@ namespace SortColorHoop.Scripts
         public async UniTask MoveRingToUp(Ring ring)
         {
             await ring.transform.DOMove(topPointBySelect.position, durationMoving);
-            ring.SetTopOrderByMoving();
+            ring.SetTopSortOrderByMoving();
         }
 
-        public async UniTask ReturnRingsToDefaultPosition()
+        public void ReturnRingsToDefaultPositionAsync()
         {
             foreach (var ring in Rings)
             {
                 ring.transform.DOLocalMove(Vector3.zero, durationMoving);
-                ring.ReturnOrder();
+                ring.ReturnSaveSortOrder();
             }
         }
 

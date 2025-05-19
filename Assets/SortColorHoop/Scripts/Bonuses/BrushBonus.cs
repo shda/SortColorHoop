@@ -31,7 +31,7 @@ namespace SortColorHoop.Scripts.Bonuses
 
             if (_firstStack == stack)
             {
-                await _firstStack.ReturnRingsToDefaultPosition();
+                _firstStack.ReturnRingsToDefaultPositionAsync();
                 _firstStack = null;
                 return;
             }

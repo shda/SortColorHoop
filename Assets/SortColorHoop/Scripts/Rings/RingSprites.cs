@@ -3,7 +3,7 @@ using UnityEngine;
 namespace SortColorHoop.Scripts
 {
     [System.Serializable]
-    public class RingColorType
+    public class RingSprites
     {
         [SerializeField] private Sprite front;
         [SerializeField] private Sprite back;

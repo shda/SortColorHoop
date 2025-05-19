@@ -20,7 +20,7 @@ namespace SortColorHoop.Scripts
         
         private void Awake()
         {
-            clickHandler.OnStackClick.Subscribe(stack => OnStackClick(stack)).AddTo(this);
+            clickHandler.OnStackClick.Subscribe(stack => OnStackClick(stack).Forget()).AddTo(this);
         }
 
         private async UniTask OnStackClick(Stack stack)
@@ -53,7 +53,7 @@ namespace SortColorHoop.Scripts
             {
                 if (_selectStack == stack)
                 {
-                    await _selectStack.ReturnRingsToDefaultPosition();
+                    _selectStack.ReturnRingsToDefaultPositionAsync();
                     _selectStack = null;
                 }
                 else

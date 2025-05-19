@@ -14,32 +14,35 @@ namespace SortColorHoop.Scripts
         [SerializeField] private float offestY = 1.0f;
         [SerializeField] private int maxXCount = 3;
         
-        public List<Stack> stacks = new();
+        private readonly List<Stack> _stacks = new();
         
         public void CreateFullStacksAndFree(int countStacks, int freeStacks)
         {
             RemoveOldStacks();
-            
+        
             Vector3 startPoint = transform.position;
-            
+        
             for (int i = 0; i < countStacks; i++)
             {
                 var newStack = stackPool.Get();
-                newStack.transform.SetParent(transform);
-                newStack.transform.localRotation = Quaternion.identity;
-                newStack.transform.localScale = Vector3.one;
-                
-                stacks.Add(newStack);
-                
-                var x = offsetStack.x * (i % maxXCount);
-                var y = offsetStack.y * (int) ((float)i / maxXCount);
-                
-                y -= offestY * ((countStacks - 1)  / 3); 
-                
-                newStack.transform.localPosition = startPoint + new Vector3(x , y ,0);
+                InitializeStackTransform(newStack, startPoint, i, countStacks);
+                _stacks.Add(newStack);
             }
-            
+        
             CreateRings(countStacks, freeStacks);
+        }
+        
+        private void InitializeStackTransform(Stack stack, Vector3 startPoint, int index, int totalStacks)
+        {
+            stack.transform.SetParent(transform);
+            stack.transform.localRotation = Quaternion.identity;
+            stack.transform.localScale = Vector3.one;
+        
+            var x = offsetStack.x * (index % maxXCount);
+            var y = offsetStack.y * (int)((float)index / maxXCount);
+            y -= offestY * ((totalStacks - 1) / 3);
+        
+            stack.transform.localPosition = startPoint + new Vector3(x, y, 0);
         }
 
         private void CreateRings(int countStacks, int freeStacks)
@@ -57,7 +60,7 @@ namespace SortColorHoop.Scripts
                     ring.transform.localScale = Vector3.one;
                     ring.gameObject.SetActive(true);
                     
-                    ring.SetColor(i);
+                    ring.SetColorSprites(i);
                     rings.Add(ring);
                 }
             }
@@ -66,24 +69,29 @@ namespace SortColorHoop.Scripts
             
             for (var i = 0; i < countFullStacks; i++)
             {
-                var stack = stacks[i];
+                var stack = _stacks[i];
                 stack.InitByRings(rings.GetRange(i * 4, 4) , i * 100);
             }
         }
 
         private void RemoveOldStacks()
         {
-            foreach (var stack in stacks)
+            foreach (var stack in _stacks)
             {
+                foreach (var ring in stack.Rings)
+                {
+                    ringPool.Release(ring);
+                }
+                
                 stackPool.Release(stack);
             }
             
-            stacks.Clear();
+            _stacks.Clear();
         }
 
-        public bool IsCompleteGame()
+        public bool IsAllStacksOneColor()
         {
-            return stacks.All(stack => stack.IsAllRingsOneColor() || stack.IsEmpty());
+            return _stacks.All(stack => stack.IsAllRingsOneColor() || stack.IsEmpty());
         }
     }
 }
