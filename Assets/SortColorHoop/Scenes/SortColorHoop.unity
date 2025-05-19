@@ -296,8 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusCountData: {fileID: 722852559}
-  ringPool: {fileID: 0}
-  clickHandler: {fileID: 0}
+  ringPool: {fileID: 740444084}
+  clickHandler: {fileID: 1249240697}
 --- !u!1 &513273701
 GameObject:
   m_ObjectHideFlags: 0
