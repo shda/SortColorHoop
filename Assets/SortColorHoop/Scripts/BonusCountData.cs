@@ -3,19 +3,10 @@ using UnityEngine;
 
 namespace SortColorHoop.Scripts
 {
-    public class BonusCountData : MonoBehaviour
+    public static class BonusCountData
     {
-        public IntReactiveProperty BombBonusCount { get; } = new(1);
-        public IntReactiveProperty BrushBonusCount { get; } = new(1);
-        public IntReactiveProperty MagnetBonusCount { get; } = new(1);
-        
-        [SerializeField] private int startCount = 1;
-
-        private void Awake()
-        {
-            BombBonusCount.Value = startCount;
-            BrushBonusCount.Value = startCount;
-            MagnetBonusCount.Value = startCount;
-        }
+        public static IntReactiveProperty BombBonusCount { get; } = new(1);
+        public static IntReactiveProperty BrushBonusCount { get; } = new(1);
+        public static IntReactiveProperty MagnetBonusCount { get; } = new(1);
     }
 }

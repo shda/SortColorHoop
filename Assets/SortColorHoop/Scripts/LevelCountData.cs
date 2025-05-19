@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace SortColorHoop.Scripts
 {
-    public class LevelCountData : MonoBehaviour
+    public static class LevelCountData
     {
-        public IntReactiveProperty LevelNumber = new(1);
+        public static IntReactiveProperty LevelNumber = new(1);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using SortColorHoop.Scripts.Bonuses;
 using TriInspector;
 using UnityEngine;
@@ -9,8 +8,6 @@ namespace SortColorHoop.Scripts
     public class Game : MonoBehaviour
     {
         [SerializeField] private int countSticks;
-        
-        [SerializeField] private LevelCountData levelCountData;
         [SerializeField] private AnimationMovingRings animationMovingRings;
         [SerializeField] private LevelLabel levelLabel;
         [SerializeField] private Board board;
@@ -31,18 +28,16 @@ namespace SortColorHoop.Scripts
 
         private void OnCheckEndLevel()
         {
-            var countFillStacks = board.CountFillStacks();
-            
-            if (_levelStartConfigurator.CountNeedFillStacksToWin == countFillStacks)
+            if (board.IsCompleteGame())
             {
-                levelCountData.LevelNumber.Value++;
+                LevelCountData.LevelNumber.Value++;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
         
         private void StartLevel(int level)
         {
-            levelCountData.LevelNumber.Value = level;
+            LevelCountData.LevelNumber.Value = level;
             
             _levelStartConfigurator = new LevelStartConfigurator();
             _levelStartConfigurator.CreateLevel(board, level);
@@ -52,7 +47,7 @@ namespace SortColorHoop.Scripts
         
         private void Start()
         {
-            StartLevel(levelCountData.LevelNumber.Value);
+            StartLevel(LevelCountData.LevelNumber.Value);
             // CreateBoard();
         }
 

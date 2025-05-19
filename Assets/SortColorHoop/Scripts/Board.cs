@@ -64,7 +64,7 @@ namespace SortColorHoop.Scripts
             for (var i = 0; i < countFullStacks; i++)
             {
                 var stack = stacks[i];
-                stack.InitByRings(rings.GetRange(i * 4, 4));
+                stack.InitByRings(rings.GetRange(i * 4, 4) , i * 100);
             }
         }
 
@@ -78,9 +78,9 @@ namespace SortColorHoop.Scripts
             stacks.Clear();
         }
 
-        public int CountFillStacks()
+        public bool IsCompleteGame()
         {
-            return stacks.Count(stack => stack.IsAllRingsOneColor());
+            return stacks.All(stack => stack.IsAllRingsOneColor() || stack.IsEmpty());
         }
     }
 }

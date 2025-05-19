@@ -5,12 +5,12 @@ namespace SortColorHoop.Scripts.Bonuses
 {
     public abstract class BonusBase : MonoBehaviour
     {
-        [SerializeField] protected BonusCountData bonusCountData;
-        
         public Action OnComplete;
-        
+        public bool IsInProcess { get; set; }
+
         public abstract void StartBonus();
         public abstract void StopBonus();
+        public abstract void BreakBonus();
         public abstract bool IsCanUsingBonus();
     }
 }

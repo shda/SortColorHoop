@@ -37,8 +37,8 @@ namespace SortColorHoop.Scripts
 
         public void SetTopOrderByMoving()
         {
-            backRenderer.sortingOrder = 500;
-            frontRenderer.sortingOrder = 500 + 1;
+            backRenderer.sortingOrder = 1000;
+            frontRenderer.sortingOrder = 1000 + 1;
         }
 
         public void ReturnOrder()

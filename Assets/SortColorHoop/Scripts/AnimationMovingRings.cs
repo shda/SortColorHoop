@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SortColorHoop.Scripts
 {
@@ -20,7 +22,7 @@ namespace SortColorHoop.Scripts
         {
             clickHandler.OnStackClick.Subscribe(stack => OnStackClick(stack)).AddTo(this);
         }
-        
+
         private async UniTask OnStackClick(Stack stack)
         {
             if(!enabled)
@@ -28,9 +30,14 @@ namespace SortColorHoop.Scripts
             
             if(_isPlayingAnimation)
                 return;
-            
+
             _isPlayingAnimation = true;
-            
+            await OnPlayAnimationMoving(stack);
+            _isPlayingAnimation = false;
+        }
+        
+        private async UniTask OnPlayAnimationMoving(Stack stack)
+        {
             if (!_selectStack)
             {
                 if(stack.IsEmpty())
@@ -59,7 +66,6 @@ namespace SortColorHoop.Scripts
             }
 
             _isPlayingAnimation = false;
-            
             OnCompleteMoving?.Invoke();
         }
         

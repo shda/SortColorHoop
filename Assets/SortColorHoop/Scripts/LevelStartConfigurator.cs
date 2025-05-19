@@ -4,8 +4,6 @@ namespace SortColorHoop.Scripts
 {
     public class LevelStartConfigurator
     {
-        public int CountNeedFillStacksToWin;
-        
         public void CreateLevel(Board board , int level)
         {
             switch (level)
@@ -23,7 +21,7 @@ namespace SortColorHoop.Scripts
                     CreateStacks(board ,9);
                     break;
                 default:
-                    CreateStacks(board ,10);
+                    CreateStacks(board ,9);
                     break;
             }
         }
@@ -31,8 +29,6 @@ namespace SortColorHoop.Scripts
         private void CreateStacks(Board board, int countAllStacks)
         {
             int freeStacks = 2;
-            
-            CountNeedFillStacksToWin = countAllStacks - freeStacks;
             board.CreateFullStacksAndFree(countAllStacks , freeStacks);
         }
     }

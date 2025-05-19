@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SortColorHoop.Scripts.Bonuses
@@ -17,16 +18,26 @@ namespace SortColorHoop.Scripts.Bonuses
         {
             if (_activeBonus)
             {
-                _activeBonus.StopBonus();
+                if (_activeBonus.IsInProcess)
+                {
+                    foreach (var toggle in togges)
+                    {
+                        toggle.SetIsOnWithoutNotify(false);
+                    }
+                    
+                    return;
+                }
+
+                _activeBonus.BreakBonus();
             }
-            
+
             if (!togges.Any(t => t.isOn))
             {
                 foreach (var toggle in togges)
                 {
                     toggle.SetIsOnWithoutNotify(false);
                 }
-
+                _activeBonus?.BreakBonus();
                 _activeBonus = null;
                 return;
             }
@@ -44,16 +55,22 @@ namespace SortColorHoop.Scripts.Bonuses
             _activeBonus.StartBonus();
             
             animationMovingRings.enabled = false;
-            
             _activeBonus.OnComplete = () =>
             {
                 animationMovingRings.enabled = true;
-                
                 foreach (var toggle in togges)
                 {
                     toggle.SetIsOnWithoutNotify(false);
                 }
             };
+        }
+
+        private void SwitchTogglesActive(Toggle[] toggles, bool isEnable)
+        {
+            foreach (var toggle in toggles)
+            {
+                toggle.enabled = isEnable;
+            }
         }
     }
 }

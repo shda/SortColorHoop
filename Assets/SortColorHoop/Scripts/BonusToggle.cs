@@ -6,7 +6,6 @@ namespace SortColorHoop.Scripts
 {
     public class BonusToggle : MonoBehaviour
     {
-        [SerializeField] private BonusCountData bonusCountData;
         [SerializeField] private TextMeshProUGUI countBonuses;
         [SerializeField] private bool isBombBonus;
         [SerializeField] private bool isBrushBonus;
@@ -15,13 +14,13 @@ namespace SortColorHoop.Scripts
         private void Awake()
         {
             if (isBombBonus)
-                bonusCountData.BombBonusCount.Subscribe(OnChangeBonus).AddTo(this);
+                BonusCountData.BombBonusCount.Subscribe(OnChangeBonus).AddTo(this);
             
             if (isBrushBonus)
-                bonusCountData.BrushBonusCount.Subscribe(OnChangeBonus).AddTo(this);
+                BonusCountData.BrushBonusCount.Subscribe(OnChangeBonus).AddTo(this);
             
             if (isMagnetBonus)
-                bonusCountData.MagnetBonusCount.Subscribe(OnChangeBonus).AddTo(this);
+                BonusCountData.MagnetBonusCount.Subscribe(OnChangeBonus).AddTo(this);
         }
 
         private void OnChangeBonus(int count)

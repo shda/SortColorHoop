@@ -8,7 +8,7 @@ namespace SortColorHoop.Scripts.Bonuses
         [SerializeField] private RingPool ringPool;
         [SerializeField] private ClickHandler clickHandler;
 
-        private CompositeDisposable _disposable = new();
+        private readonly CompositeDisposable _disposable = new();
         
         public override void StartBonus()
         {
@@ -17,10 +17,12 @@ namespace SortColorHoop.Scripts.Bonuses
 
         private void OnClickStack(Stack stack)
         {
+            IsInProcess = true;
+            
             if (stack.IsAllRingsOneColor())
             {
                 stack.RemoveAllRings(ringPool);
-                bonusCountData.BombBonusCount.Value--;
+                BonusCountData.BombBonusCount.Value--;
                 StopBonus();
             }
             else
@@ -31,13 +33,20 @@ namespace SortColorHoop.Scripts.Bonuses
 
         public override void StopBonus()
         {
+            IsInProcess = false;
             _disposable.Clear();
             OnComplete?.Invoke();
         }
 
+        public override void BreakBonus()
+        {
+            IsInProcess = false;
+            _disposable.Clear();
+        }
+
         public override bool IsCanUsingBonus()
         {
-            return bonusCountData.BombBonusCount.Value > 0;
+            return BonusCountData.BombBonusCount.Value > 0;
         }
     }
 }

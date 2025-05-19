@@ -17,7 +17,7 @@ namespace SortColorHoop.Scripts
         private readonly float durationMoving = 0.2f;
         private int _maxRings = 4;
 
-        public void InitByRings(IEnumerable<Ring> rings)
+        public void InitByRings(IEnumerable<Ring> rings, int sortOffest)
         {
             Rings = rings.ToList();
 
@@ -25,20 +25,23 @@ namespace SortColorHoop.Scripts
             {
                 Rings[i].transform.SetParent(ringsPoints[i]);
                 Rings[i].transform.localPosition = Vector3.zero;
-                Rings[i].SetSortIndex(i);
+                Rings[i].SetSortIndex( i );
             }
         }
 
-        public async UniTask MoveRingToUp()
+        public async UniTask<Ring> MoveRingToUp()
         {
+            Ring ring = null;
+            
             if (Rings.Count > 0)
             {
                 IsSelected = true;
 
-                var ring = Rings.LastOrDefault();
-                await ring.transform.DOMove(topPointBySelect.position, durationMoving);
-                ring.SetTopOrderByMoving();
+                ring = Rings.LastOrDefault();
+                await MoveRingToUp(ring);
             }
+
+            return ring;
         }
 
         public async UniTask MoveRingToUp(Ring ring)
@@ -74,12 +77,7 @@ namespace SortColorHoop.Scripts
         {
             return Rings.EmptyOnNull();
         }
-
-        public int GetFreeSpaces()
-        {
-            return Rings.Count - _maxRings;
-        }
-
+        
         public Ring GetTopRing()
         {
             if (Rings.Any())
