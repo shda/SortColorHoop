@@ -23,6 +23,7 @@ namespace SortColorHoop.Scripts.Bonuses
             {
                 stack.RemoveAllRings(ringPool);
                 BonusCountData.BombBonusCount.Value--;
+                BonusCountData.Save();
                 StopBonus();
             }
             else

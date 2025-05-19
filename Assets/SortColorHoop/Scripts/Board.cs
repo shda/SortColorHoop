@@ -11,6 +11,7 @@ namespace SortColorHoop.Scripts
         [SerializeField] private StackPool stackPool;
 
         [SerializeField] private Vector3 offsetStack;
+        [SerializeField] private float offestY = 1.0f;
         [SerializeField] private int maxXCount = 3;
         
         public List<Stack> stacks = new();
@@ -32,6 +33,8 @@ namespace SortColorHoop.Scripts
                 
                 var x = offsetStack.x * (i % maxXCount);
                 var y = offsetStack.y * (int) ((float)i / maxXCount);
+                
+                y -= offestY * ((countStacks - 1)  / 3); 
                 
                 newStack.transform.localPosition = startPoint + new Vector3(x , y ,0);
             }
