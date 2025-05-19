@@ -30,8 +30,28 @@ namespace SortColorHoop.Scripts
         {
             if (board.IsCompleteGame())
             {
+                AddRandomBonus();
                 LevelCountData.LevelNumber.Value++;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+
+        private void AddRandomBonus()
+        {
+            var bonusIndex = Random.Range(0, 3);
+            switch (bonusIndex)
+            {
+                case 0:
+                    BonusCountData.MagnetBonusCount.Value++;
+                    break;
+                case 1:
+                    BonusCountData.BrushBonusCount.Value++;
+                    break;
+                case 2:
+                    BonusCountData.BombBonusCount.Value++;
+                    break;
+                default:
+                    break;
             }
         }
         
@@ -48,7 +68,6 @@ namespace SortColorHoop.Scripts
         private void Start()
         {
             StartLevel(LevelCountData.LevelNumber.Value);
-            // CreateBoard();
         }
 
         [Button]

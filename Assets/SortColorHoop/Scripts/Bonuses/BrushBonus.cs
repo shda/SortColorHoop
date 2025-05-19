@@ -59,7 +59,7 @@ namespace SortColorHoop.Scripts.Bonuses
 
         public override bool IsCanUsingBonus()
         {
-            return BonusCountData.MagnetBonusCount.Value > 0;
+            return BonusCountData.BrushBonusCount.Value > 0;
         }
     }
 }
