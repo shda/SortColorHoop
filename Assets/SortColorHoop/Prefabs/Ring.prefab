@@ -142,8 +142,6 @@ MonoBehaviour:
     back: {fileID: 21300000, guid: d9911340146dcf24482ded3e5107038b, type: 3}
   - front: {fileID: 21300000, guid: 1246619b683d06f41b06cd6ca742944c, type: 3}
     back: {fileID: 21300000, guid: eec60a6cd9d726f448265f4bc32b4269, type: 3}
-  - front: {fileID: -2850776150966528647, guid: e3a43e4a82d29094ba6ce914a4805b83, type: 3}
-    back: {fileID: 2096379947058244729, guid: bcdacdd10e8b1e745842b92d37a25501, type: 3}
   - front: {fileID: 21300000, guid: f788a98132588454e8b9f3857644cbed, type: 3}
     back: {fileID: 21300000, guid: 355e589c6ba07ae4f93878be1a4546ec, type: 3}
   - front: {fileID: 21300000, guid: d85ffc1061719bf48a58a8caf75e3f7b, type: 3}
@@ -152,6 +150,8 @@ MonoBehaviour:
     back: {fileID: 21300000, guid: c23b0906bacd8c640abd6d60ed50892d, type: 3}
   - front: {fileID: 21300000, guid: 83007a61990a59d449390c88644b163c, type: 3}
     back: {fileID: 21300000, guid: c2e803ff974632447bdea235a4d2c25e, type: 3}
+  - front: {fileID: -2850776150966528647, guid: e3a43e4a82d29094ba6ce914a4805b83, type: 3}
+    back: {fileID: 2096379947058244729, guid: bcdacdd10e8b1e745842b92d37a25501, type: 3}
 --- !u!1 &5780091265891361067
 GameObject:
   m_ObjectHideFlags: 0
