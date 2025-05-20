@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using BlockBlast.Scripts.Common.Extensions;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using SortColorHoop.Scripts.Rings;
 using UnityEngine;
 
 namespace SortColorHoop.Scripts.Bonuses

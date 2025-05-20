@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BlockBlast.Scripts.Common.Extensions;
+using SortColorHoop.Scripts.Rings;
 using UnityEngine;
 
 namespace SortColorHoop.Scripts

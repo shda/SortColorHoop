@@ -1,6 +1,6 @@
 using BlockBlast.Scripts.Common;
 
-namespace SortColorHoop.Scripts
+namespace SortColorHoop.Scripts.Rings
 {
     public class RingPool : PoolGameObjects<Ring>
     {

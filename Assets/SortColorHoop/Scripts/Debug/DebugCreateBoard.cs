@@ -1,7 +1,7 @@
 using TriInspector;
 using UnityEngine;
 
-namespace SortColorHoop.Scripts
+namespace SortColorHoop.Scripts.Debug
 {
     public class DebugCreateBoard : MonoBehaviour
     {

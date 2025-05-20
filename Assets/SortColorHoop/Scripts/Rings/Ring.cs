@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SortColorHoop.Scripts
+namespace SortColorHoop.Scripts.Rings
 {
     public class Ring : MonoBehaviour
     {
